@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="shop">
+	<select id = "list_product"
+    resultType = "com.example.spring03.model.shop.dto.ProductDTO"> 
+        SELECT * FROM dpm_product ORDER BY dbms_random.value
+    </select>
+     <select id="shop_detail" 
+  resultType="com.example.spring03.model.shop.dto.ProductDTO">
+    select * from dpm_product
+    where Product_num=#{product_num}
+  </select>
+  <insert id="insert">
+    insert into dpm_product(Product_num, Product_name, Product_code, Product_price, Product_main_photo,Product_photo, Product_description) 
+    values
+	    ((select nvl(max(product_num)+1,1) from dpm_product),#{product_name},#{product_code},#{product_price}
+	    ,#{product_description},#{product_photo},#{product_main_photo})
+  </insert>
+   <update id="shop_update">
+    update dpm_product
+    set
+      product_name=#{product_name},
+      product_price=#{product_price},
+      product_code=#{product_code},
+      product_description=#{product_description},
+      product_photo=#{product_photos}
+    where product_num=#{product_num}
+  </update>
+  <select id="fileInfo" resultType="String">
+    select product_main_photo from dpm_product
+    where product_num=#{product_num}
+  </select>
+  
+  <delete id="shop_delete">
+    delete from dpm_product
+    where product_num=#{product_num}
+  </delete>
+  <select id="op_productop" resultType="com.example.spring03.model.shop.dto.ProductDTO">
+  	select a.product_num, b.Product_option1
+	from dpm_product a, dpm_Product_option1 b
+	where a.product_num = b.product_num and a.product_num = #{product_num}
+  </select>
+   <select id="list_productimage" resultType="com.example.spring03.model.shop.dto.ProductImageDTO">
+  	select a.product_num, b.Product_photourl
+	from dpm_product a, dpm_product_photoUrl b
+	where a.product_num = b.product_num and a.product_num = #{product_num}
+  </select>
+  
+  <select id="op2_list" resultType="com.example.spring03.model.shop.dto.ProductDTO">
+  	select a.product_num, b.product_option2 
+	from dpm_product a, dpm_product_option2  b
+	where a.product_num = b.product_num and a.product_num = #{product_num}
+  </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

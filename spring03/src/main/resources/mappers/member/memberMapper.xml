@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="member">
+  <select id="login_check" 
+  parameterType="com.example.spring03.model.member.dto.MemberDTO"
+  resultType="String">
+    select name from dpm_Member
+    where userid=#{userid} and passwd=#{passwd}
+  </select>
+  
+  <select id="listAllMember" resultType="com.example.spring03.model.member.dto.MemberDTO">
+    select * from dpm_Member order by member_verify desc, member_rank desc
+  </select>
+  
+  <select id="idcheck" resultType="String">
+  	select userid from dpm_Member
+  	where userid = #{userid}
+  </select>
+  
+  <insert id="join_check">
+  insert into dpm_Member(userno, userid, passwd, name, hp, hp2, hp3, email, textemail, postcode, address, detailAddress, extraAddress)
+  values((select nvl(max(userno)+1,1) from dpm_member), #{userid}, #{passwd}, #{name}, #{hp}, #{hp2}, #{hp3}, #{email}, #{textemail}, #{postcode}, #{address}, #{detailAddress}, #{extraAddress})
+  </insert>
+  
+  <update id="updateMember">
+  update dpm_Member
+		set passwd = #{passwd}, hp = #{hp}, hp2 = #{hp2}, hp3 = #{hp3}, email = #{email}, textemail = #{textemail},
+			postcode = #{postcode}, address = #{address}, detailAddress = #{detailAddress}, extraAddress = #{extraAddress}			
+		where userid = #{userid}
+  </update>
+  
+ <update id="updateMemberByAdmin">
+  update dpm_Member
+		set userid = #{userid}, passwd = #{passwd}, name = #{name}, hp = #{hp}, hp2 = #{hp2}, hp3 = #{hp3}, email = #{email}, textemail = #{textemail},
+			postcode = #{postcode}, address = #{address}, detailAddress = #{detailAddress}, extraAddress = #{extraAddress}	
+		where userno = #{userno}
+  </update>
+  
+  <select id="idfind" 
+  parameterType="com.example.spring03.model.member.dto.MemberDTO"
+  resultType="String">
+    select userid from dpm_Member
+    where name=#{name} and hp=#{hp}
+  </select>
+  
+  <select id="passwdfind" 
+  parameterType="com.example.spring03.model.member.dto.MemberDTO"
+  resultType="String">
+    select passwd from dpm_Member
+    where userid=#{userid} and name=#{name} and hp=#{hp}
+  </select>
+  
+  <select id="viewMember" 
+  resultType="com.example.spring03.model.member.dto.MemberDTO">
+    select * from dpm_Member
+    where userid=#{userid}
+  </select>
+
+  <insert id="generateEmailVerifyNumber">
+  	insert into dpm_email_verify(order_num, email, verifyNumber)
+	values ((select nvl(max(order_num)+1,1) from dpm_email_verify), #{email}, #{verifyNumber})
+  </insert>
+  
+  <select id="getOrderNumber" resultType="String">
+  	select order_num
+  	from dpm_email_verify
+  	where email = #{email} and verifyNumber = #{verifyNumber}
+  </select>
+
+	<select id="emailVerify" resultType="int">
+		select verifyNumber
+		from dpm_email_verify
+		where order_num = #{order_num}
+	</select>
+
+	<!-- <insert id="join">
+		insert into dpm_Member (userid, passwd, name, hp, ) 
+		values (#{userid}, #{passwd}, #{name}, (select nvl(max(userno)+1,1) from jsp_member))
+	</insert>
+  
+
+	
+	<select id="info" resultType="com.example.spring03.model.member.dto.MemberDTO">
+		select userid, passwd, name, hp, email, addr, member_rank, member_verify, join_date 
+		from dpm_member
+		where userid = #{userid}
+	</select>
+	
+	<select id="list" resultType="com.example.spring03.model.member.dto.MemberDTO">
+		select * from dpm_member
+	</select>
+	
+	
+
+	<select id="join_check" resultType="String">
+		select name from dpm_member
+		where userid = #{userid}
+	</select>
+	
+	
+	
+	<delete id="deleteMember">
+		delete from jsp_member 
+		where userid = #{userid}
+	</delete>
+	
+	<update id="updateMember">
+		update jsp_member 
+		set userid = #{userid}, passwd = #{passwd}, name = #{name}, hp = #{hp}, email = #{email}, 
+			addr = #{addr}, member_rank = #{member_rank}, member_verify = #{member_verify}
+		where userid = #{beforeUserid}
+	</update> -->
+	
+	
+</mapper>

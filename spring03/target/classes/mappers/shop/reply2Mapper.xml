@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="reply2">
+<insert id="insertReply">
+ insert into dpm_reply2(rno,product_num,replytext,replyer) values
+ (dpm_reply2_seq.nextval, #{product_num},#{replytext}, #{replyer})
+</insert>
+
+<select id="listReply" resultType="com.example.spring03.model.reply2.dto.Reply2DTO">
+  select rno,product_num,replytext,replyer,regdate,name
+  from dpm_reply2 r, dpm_member m
+  where r.replyer=m.userid and product_num=#{product_num}
+  order by rno
+</select>
+<!-- 댓글 수정 -->
+	<update id="updateReply">
+		UPDATE dpm_reply2 SET replytext = #{replytext}
+		WHERE RNO = #{rno}
+	</update>
+
+<!-- 댓글 삭제 -->
+	<delete id="deleteReply">
+		DELETE FROM dpm_reply2
+		WHERE rno = #{rno}
+	</delete>
+</mapper>

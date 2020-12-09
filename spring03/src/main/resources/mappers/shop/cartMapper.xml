@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="cart">
+  <select id="listCart" 
+  resultType="com.example.spring03.model.shop.dto.CartDTO">
+    select cart_id, m.userid, name
+	, p.product_num, product_name, amount, product_price
+    , product_price*amount money
+    from dpm_member m, dpm_cart c, dpm_product p
+    where m.userid=c.userid and p.product_num=c.product_num
+    and m.userid=#{userid}
+  </select>
+  
+  <insert id="insert">
+    insert into dpm_cart(cart_id,userid,product_num,amount) 
+    values ((select nvl(max(cart_id)+1,1) from dpm_cart), #{userid},#{product_num},#{amount})
+  </insert>
+  
+  <select id="sumMoney" resultType="int">
+     select nvl(sum(product_price * amount), 0) money
+	 from dpm_product p, dpm_cart c
+	 where c.product_num=p.product_num
+	 and userid=#{userid}
+  </select>
+  
+  <delete id="delete">
+    delete from dpm_cart
+    where cart_id=#{cart_id}
+  </delete>
+  
+  <delete id="deleteAll">
+    delete from dpm_cart
+    where userid=#{userid}
+  </delete>
+  
+  <delete id="cartAllDelete">
+   delete dpm_cart
+   where userId = #{userId}
+  </delete>
+  
+  <update id="modifyCart">
+    update dpm_cart
+    set amount=#{amount}
+    where cart_id=#{cart_id}
+  </update>
+  
+  <select id="cart_money" 
+  resultType="com.example.spring03.model.shop.dto.CartDTO">
+    select product_name, sum(product_price*amount) money
+    from dpm_cart c, dpm_product p
+	where c.product_num=p.product_num
+	group by product_name
+	order by product_name
+  </select>
+  
+  <!-- 주문 정보 -->
+<insert id="orderInfo">
+ insert into dpm_order(orderId, userId, orderRec, userAddr1, userAddr2, userAddr3, orderPhon, amount)
+ values(#{orderId}, #{userId}, #{orderRec}, #{userAddr1}, #{userAddr2}, #{userAddr3}, #{orderPhon}, #{amount})
+</insert>
+   
+<!-- 주문 상세 정보 --> 
+<insert id="orderInfo_Details">
+  insert into dpm_order_details(orderDetailsNum, orderId, gdsNum, cartStock)
+  select dpm_order_details_seq.nextval, #{orderId}, product_num, cart_id
+  from dpm_cart   
+</insert> 
+
+<!-- 특정 유저의 주문 목록 -->
+<select id="orderList" resultType="com.example.spring03.model.order.dto.OrderDTO">
+    select
+    orderId, userId, orderRec, userAddr1, userAddr2, userAddr3, orderPhon, amount, orderDate
+    from dpm_order 
+    where userId = #{userId}
+</select>
+  
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

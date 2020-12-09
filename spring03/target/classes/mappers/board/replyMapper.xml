@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="reply">
+<insert id="insertReply">
+ insert into dpm_comment(rno,bno,replytext,replyer) values
+ (dpm_comment_seq.nextval, #{bno},#{replytext}, #{replyer})
+</insert>
+<select id="listReply" resultType="com.example.spring03.model.board.dto.ReplyDTO">
+  select r.rno, r.bno, r.replytext, r.replyer,r.regdate,r.updatedate, m.name
+  from dpm_comment r, dpm_member m
+  where r.replyer=m.name and r.bno=#{r.bno}
+  order by r.rno
+</select>
+<delete id="deleteReply">
+		DELETE FROM dpm_comment
+		WHERE rno = #{rno}
+	</delete>	
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

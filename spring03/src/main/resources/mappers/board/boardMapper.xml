@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="board">
+<select id="listAll"
+resultType="com.example.spring03.model.board.dto.BoardDTO">
+		<include refid="paging_header" />
+			select b.bno,b.subject, b.userid, m.name, b.reg_date, b.readcount, b.show
+  				,(select count(*) from dpm_comment where bno=b.bno) cnt					
+			from dpm_board b, dpm_member m
+			<include refid="search" />
+			order by b.bno desc   
+		<include refid="paging_footer" />
+	</select>
+	<sql id="paging_header">
+		select *
+		from (
+		    select rownum as rn, A.*
+		    from (	
+	</sql>
+	<sql id="paging_footer">
+		    ) A
+		) where rn between #{start} and #{end}	
+	</sql>
+  
+  <insert id="insert">
+    insert into dpm_board (bno,subject,content,userid) values
+	( seq_dpm_board.nextval, #{subject}, #{content}, #{userid} )
+  </insert>
+  
+  <insert id="addAttach">
+    insert into dpm_attach (fullName, bno) values
+	( #{fullName}, seq_dpm_board.currval ) 
+
+  </insert>
+  
+  <select id="countArticle" resultType="int">
+    select count(*)
+    from dpm_board b,dpm_member m
+    <include refid="search" />
+  </select>
+  <!-- 검색기능, sql태그는 다른 태그에 끼워넣을 수 있는 기능을 가지고 있음. -->
+  <sql id="search">
+    <choose>
+			<when test="search_option != 'all' ">
+				where b.userid=m.userid and show='Y' and ${search_option} like #{keyword}			
+			</when>
+			<otherwise>
+				where b.userid=m.userid and show='Y' and (name like #{keyword} or subject like #{keyword} or content like #{keyword} )			
+			</otherwise>
+		</choose>
+  </sql>
+  
+  <update id="increaseViewcnt">
+    update dpm_board set readcount=readcount+1
+    where bno=#{bno}
+  </update>
+  
+  <select id="read" resultType="com.example.spring03.model.board.dto.BoardDTO">
+    select b.bno, b.subject, b.userid, m.name, b.content,b.reg_date, b.readcount
+	from dpm_board b, dpm_member m
+	where b.userid=m.userid and bno=#{bno}
+  </select>
+  
+  <select id="getAttach" resultType="String">
+    select fullName
+    from dpm_attach
+    where bno=#{bno}
+    order by reg_date desc
+  </select>
+  
+  <delete id="deleteFile">
+    delete from dpm_attach
+    where fullName=#{fullName}
+  </delete>
+ 
+  <!-- 게시물 내용 수정 --> 
+  <update id="update">
+    update dpm_board
+    set subject=#{subject}, content=#{content}
+    where bno=#{bno}
+  </update>
+  
+  <!-- 새로운 첨부파일 추가 -->
+  <insert id="updateAttach">
+    insert into dpm_attach (fullName, bno) values
+    (#{fullName}, #{bno})
+  </insert>
+  
+  <!-- 게시물 삭제 -->
+  <delete id="delete">
+    update dpm_board set show='N' where bno=#{bno} 
+  </delete>
+  
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
