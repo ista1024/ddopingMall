@@ -5,8 +5,123 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<%@ include file="../include/header.jsp" %>
 
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+		
+<style type="text/css">
+a:visited {
+   text-decoration: underline;
+   color: black;}
+a:link {text-decoration: none; color: ; }
+a:hover {
+   text-decoration:none;  color: underlblack;
+   }
+
+* {
+    box-sizing: border-box;
+}
+body{
+	padding-top :100px;
+	justify-content: center; 
+	display: flex; 
+	 
+	text-align: center;
+	
+	/* line-height: 50px; */
+	background: #F2F2F2;
+	}
+#header span {
+	font-family: 'Monoton', cursive;
+	color: white;
+}
+
+#wrapper {
+align-items: center;
+height: 100vh; 
+}
+
+
+#form{
+background: white;
+position: relative;
+z-index: 2;
+}
+#userid{
+width: 66%; 
+padding: 20px 1px 10px; 
+border: none;
+border-bottom: 1px solid black; 
+background-color: transparent; 
+outline: none;
+cursor: pointer; 
+}
+
+#name{
+width: 66%; 
+padding: 20px 1px 10px; 
+border: none;
+border-bottom: 1px solid black; 
+background-color: transparent; 
+outline: none;
+cursor: pointer; 
+}
+
+#hp{
+width: 20%; 
+padding: 20px 1px 10px; 
+border: none;
+border-bottom: 1px solid black; 
+background-color: transparent; 
+outline: none;
+cursor: pointer;
+}
+#hp2{
+width: 20%; 
+padding: 20px 1px 10px;  
+border: none;
+border-bottom: 1px solid black; 
+background-color: transparent; 
+outline: none;
+cursor: pointer;
+}
+#hp3{
+width: 20%; 
+padding: 20px 1px 10px; 
+border: none;
+border-bottom: 1px solid black; 
+background-color: transparent; 
+outline: none;
+cursor: pointer;
+}
+
+#caption {
+margin-top: 20px;
+text-align: center;
+}
+#caption a {
+font-size: 15px;
+color: black;
+text-decoration: none;
+}
+
+#btnFind {
+width: 50%; height: 50px;
+background: black;
+opacity: 0.5;
+color: gray;
+font-size: 20px;
+border: none;
+border-radius: 25px; 
+cursor: pointer;
+outline: none;
+color: white;
+}
+
+
+</style>
+
+<%@ include file="../include/header.jsp" %>
 <script type="text/javascript">
 $(function(){
 	$("#btnFind").click(function(){
@@ -51,25 +166,35 @@ $(function(){
 
 </head>
 <body>
+<div id="wrapper">
+<header id="fh5co-header" role="banner">
+			<div class="container text-center">
+				<div id="header">
+					<span><a href="${path}/main/home.do" style="font-size: 130px;">D P M</a></span>	
+				</div>
+			</div>
+		</header>
 
-<%@ include file="../include/menu.jsp" %>
+
+<form id="form" name="form" method="post" style="padding:100px 0px; background-color: white;">
 <h2>비밀번호 찾기</h2>
-<form name="form" method="post">
-<table border="1" width="400px">
+<table>
 <tr>
-  <td>아이디</td>
-  <td><input name="userid" id="userid"></td>
+  
+  <td style="width: 400px;"><input placeholder="USERID" autocomplete="off" name="userid" id="userid"></td>
 </tr>
 <tr>
-  <td>이름</td>
-  <td><input name="name" id="name"></td>
+  
+  <td style="white: 400px;"><input placeholder="NAME" autocomplete="off" name="name" id="name"></td>
 </tr>
 <tr>
-  <td>전화번호</td>
-  <td><input name="hp" id="hp"> - <input name="hp2" id="hp2"> - <input name="hp3" id="hp3"></td>
+  <td style="white: 133px;"><input autocomplete="off" placeholder="010" name="hp" id="hp"> 
+  - <input autocomplete="off" placeholder="0000" name="hp2" id="hp2"> 
+  - <input autocomplete="off" placeholder="0000" name="hp3" id="hp3"></td>
 </tr>
 <tr>
   <td colspan="2" align="center">
+  <br><br>
   	<input type="button" id="btnFind" value="찾기">
   
   </td>
@@ -80,5 +205,6 @@ $(function(){
 </table>
 
 </form>
+</div>
 </body>
 </html>

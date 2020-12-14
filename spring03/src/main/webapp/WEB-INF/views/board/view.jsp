@@ -8,8 +8,22 @@
 <title>Insert title here</title>
 <%@ include file="../include/header.jsp" %>
 <script src="${path}/include/js/common.js"></script>
+<!-- Animate.css -->
+<link rel="stylesheet" href="${path}/resources/css/animate.css">
+<!-- Icomoon Icon Fonts-->
+<link rel="stylesheet" href="${path}/resources/css/icomoon.css">
+<!-- Bootstrap  -->
+<link rel="stylesheet" href="${path}/resources/css/bootstrap.css">
+<!-- Superfish -->
+<link rel="stylesheet" href="${path}/resources/css/superfish.css">
+<!-- Flexslider  -->
+<link rel="stylesheet" href="${path}/resources/css/flexslider.css">
+
+<link rel="stylesheet" href="${path}/resources/css/style.css">
+
+<link rel="preconnect" href="https://fonts.gstatic.com">
  <!-- ckeditor의 라이브러리 -->
-<script src="${path}/ckeditor/ckeditor.js"></script>
+<script src="${path}/resources/ckeditor/ckeditor.js"></script>
 <script>
 $(function(){ //자동으로 실행되는 코드
 	//댓글 목록 출력
@@ -72,6 +86,15 @@ $(function(){ //자동으로 실행되는 코드
 	$("#btnList").click(function(){
 		location.href="${path}/board/list.do";
 	});
+	$("#btnRecommend").click(function(){
+	    if(confirm("해당 글을 추천하시겠습니까?")){
+	        document.form1.action="recommend.do";
+	        document.form1.submit();
+	        
+	        alert("해당 글을 추천하였습니다.")
+	        
+	        }
+	    });
 	//수정 버튼
 	$("#btnUpdate").click(function(){
 		//첨부파일 이름들을 폼에 추가
@@ -174,59 +197,135 @@ function listAttach(){
 });
 }
 
+
 </script>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap');
 .fileDrop {
 width: 600px;
 height: 100px;
 border: 1px dotted gray;
 background-color: gray;
 }
+
+h2{
+text-align: center; margin: 0 auto;
+}
+#main{
+height: 45%; width: 40%;
+text-align: center; margin: 0 auto;
+}
+#i1{
+height: 20px; width: 20px;
+}
+.sujeong{
+text-align:right; padding-right: 200px;
+}
+#sub1{
+text-align: center; margin: 0 auto;
+}
+#d1{
+text-align: center; margin: 0 auto;
+}
+#read1{
+text-align: center; margin: 0 auto;
+}
+#btn1{
+text-align: center; margin: 0 auto;
+}
+#btnRecommend{
+background-color: white; color: black; font-family: 'Gamja Flower', cursive;
+}
+#btnList{
+ckground-color: white; color: black; font-family: 'Gamja Flower', cursive;
+}
+
 </style>
+
 
 </head>
 <body>
-<%@ include file="../include/menu.jsp" %>
-<h2>${dto.bno}번 게시물</h2>
+<header id="fh5co-header" role="banner">
+	<div class="container text-center">
+		<div id="header">
+			<h6><a href="${path}/main/home.do">D P M</a></h6>	
+		</div>
+		<nav>
+			<ul>
+				<li><a href="${path}/main/menubar.do?product=best">Best</a></li>
+				<li><a href="${path}/main/menubar.do?product=top">Top</a></li>
+				<li><a href="${path}/main/menubar.do?product=pants">Pants</a></li>
+			</ul>
+		</nav>
+	</div>
+</header>
+<br>
+<div>
+<h2>${dto.subject}</h2>
+<div id="read1" style="float: ri">조회수 : ${dto.readcount}	</div>
+
 <form id="form1" name="form1" method="post"
 action="${path}/board/insert.do">
-<div>제목 <input name="subject" id="subject" size="80"
+<div id="sub1">제목 <input name="subject" id="subject" size="70"
 				value="${dto.subject}"
 				placeholder="제목을 입력하세요">
 </div>
-<div>조회수 : ${dto.readcount}	</div>
-<div style="width:800px;">
-	내용 <textarea id="content" name="content"rows="3" cols="80" 
+<div id="main">
+	<textarea id="content" name="content"rows="3" cols="80" 
 	placeholder="내용을 입력하세요">${dto.content}</textarea>
 <script>
 //ckeditor 적용
 CKEDITOR.replace("content",{
 filebrowserUploadUrl: "${path}/imageUpload.do",
-height: "300px"
+height: "80%"
 });
 </script>
 </div>
+<br>
+
+
 <!-- 수정,삭제에 필요한 글번호를 hidden 태그에 저장 -->	
 <input type="hidden" name="bno" value="${dto.bno}">
 <!-- 본인만 수정,삭제 버튼 표시 -->
- <c:if test="${sessionScope.userid == dto.userid}">
+<div>
+	<div class="sujeong" align="right" style="padding-right: 500px;">
+	<c:if test="${sessionScope.userid == dto.userid}">
 	<button type="button" id="btnUpdate">수정</button>
 	<button type="button" id="btnDelete">삭제</button>
- </c:if>
+	</c:if>
+	</div> 
+  <div id="btn1">
 	<button type="button" id="btnList">목록</button>
+	<button type="button" id="btnRecommend"><img id="i1"alt="" src="${path}/resources/images/ddabong.jpg">추천 &nbsp;${dto.recommend}</button>
+</div>
 </div>
 </form>
+<br>
+<br>
+</div>
 <!-- 댓글 작성 -->
+<div id="d1">
  <c:if test="${sessionScope.userid != null }">
  	<textarea rows="5" cols="80" id="replytext"
- 		placeholder="댓글을 작성하세요"></textarea>
+ 		placeholder="댓글창"></textarea>
  	<br>
- 	<button type="button" id="btnReply">댓글쓰기</button>
+ 	<button type="button" id="btnReply">댓글 작성</button>
  </c:if>
 </div>
 <!-- 댓글 목록 -->
-<div id="listReply"></div>
-
+<div  id="listReply"></div>
+<footer id="fh5co-footer" role="contentinfo">
+	<div class="container-fluid">
+		<div class="footer-content">
+			<div class="copyright"><small>&copy; 2020 DDO PING MALL. All Rights Reserved. <br></small></div>
+				<div class="social">
+					<a href="#"><i class="icon-facebook3"></i></a>
+					<a href="https://www.instagram.com/lee_jae_hyounggggg/"><i class="icon-instagram2"></i></a>
+					<a href="#"><i class="icon-youtube"></i></a>
+				</div>
+		</div>
+	</div>
+</footer>
 </body>
 </html>
 	

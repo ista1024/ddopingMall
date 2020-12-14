@@ -17,45 +17,44 @@ public class ProductServiceImpl implements ProductService {
 	@Inject
 	ProductDAO productDao;
 
+
 	@Override
 	public List<ProductDTO> listProduct() {
-		// TODO Auto-generated method stub
 		return productDao.listProduct();
 	}
 
 	@Override
+	public List<ProductDTO> listProduct(ProductDTO dto) {
+		return productDao.listProduct(dto);
+	}
+
+	@Override
 	public ProductDTO detailProduct(int product_num) {
-		// TODO Auto-generated method stub
 		return productDao.detailProduct(product_num);
 	}
 
 	@Override
 	public void updateProduct(ProductDTO dto) {
-		productDao.updateProduct(dto);
 
 	}
 
 	@Override
 	public void deleteProduct(int product_num) {
 		productDao.deleteProduct(product_num);
-
 	}
 
 	@Override
 	public void insertProduct(ProductDTO dto) {
 		productDao.insertProduct(dto);
-
 	}
 
 	@Override
 	public String fileInfo(int product_num) {
-		// TODO Auto-generated method stub
 		return productDao.fileInfo(product_num);
 	}
 
 	@Override
 	public List<ProductDTO> listProductop(int product_num) {
-		
 		return productDao.listProductop(product_num);
 	}
 	@Override
@@ -66,7 +65,5 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductDTO> listop2(int product_num) {
 		return productDao.listop2(product_num);
 	}
-
-
 
 }

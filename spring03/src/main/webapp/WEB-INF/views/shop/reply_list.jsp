@@ -13,7 +13,7 @@ function reply_Delete(num){
 	console.log(replyNum);
 	$.ajax({
 		type: "post",
-		url: "${path}/reply/delete.do",
+		url: "${path}/reply2/delete.do",
 		data: {"rno" : replyNum},
 		success: function(){
 			alert("댓글이 삭제되었습니다.");
@@ -50,7 +50,7 @@ value="${fn:replace(str,newLineChar,'<br>') }" />
 			( <fmt:formatDate value="${row.regdate}"
 				 pattern="yyyy-MM-dd a HH:mm:ss" /> )<br>
 			${str}
-			<c:if test="${sessionScope.name == row.name || sessionScope.name == '어드민'}">
+			<c:if test="${sessionScope.member_verify >= 2 || sessionScope.admin_userid != null || sessionScope.userid == row.userid}">
 		<%-- <button type = "button" id = "btn_reply_Update${replyCount.count}" onclick="reply_Update(${replyCount.count})">수정</button> --%>
 			<button type = "button" id = "btn_reply_Delete${replyCount.count}" onclick="reply_Delete(${replyCount.count})">삭제</button>
 			</c:if>

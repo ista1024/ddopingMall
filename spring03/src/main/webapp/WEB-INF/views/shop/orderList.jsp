@@ -6,8 +6,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <%@ include file="../include/header.jsp" %>
+
 <style>
- section#content ul li { border:5px solid #eee; padding:10px 20px; margin-bottom:20px; }
+ section#content {margin: auto; width: 70%;}
+ section#content ul li {border:5px solid #eee; padding:10px 20px; margin-bottom:20px; list-style: none;}
  section#content .orderList span { font-size:20px; font-weight:bold; display:inline-block; width:90px; margin-right:10px; }
 </style>
 <!-- Animate.css -->
@@ -48,14 +50,15 @@
   <li>
   <div>
    <p><span>주문번호</span><a href="/shop/orderView?n=${orderList.orderId}">${orderList.orderId}</a></p>
-   <p><span>수령인</span>${orderList.orderRec}</p>
-   <p><span>주소</span>(${orderList.userAddr1}) ${orderList.userAddr2} ${orderList.userAddr3}</p>
+   <p><span>수령인</span>${orderList.name}</p>
+   <p><span>주소</span>(${orderList.address}) ${orderList.detailAddress} ${orderList.extraAddress}</p>
    <p><span>가격</span><fmt:formatNumber pattern="###,###,###" value="${orderList.amount}" /> 원</p>
   </div>
   </li>
   </c:forEach>
  </ul>
 </section>
+
 <footer id="fh5co-footer" role="contentinfo">
 	<div class="container-fluid">
 		<div class="footer-content">

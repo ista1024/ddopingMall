@@ -3,6 +3,7 @@ package com.example.spring03.model.member.dao;
 import java.util.List;
 
 import com.example.spring03.model.member.dto.MemberDTO;
+import com.example.spring03.model.order.dto.OrderDTO;
 
 public interface MemberDAO {
 	public boolean loginCheck(MemberDTO dto);
@@ -17,4 +18,6 @@ public interface MemberDAO {
 	public void generateEmailVerifyNumber(String email, String verifyNumber);
 	public String getOrderNumber(String email, String verifyNumber);
 	public int emailVerify(int verifyOrder);
+	public void deleteInvalidatedNum(int verifyOrder);
+	public OrderDTO orderMember(String userid);
 }

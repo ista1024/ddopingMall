@@ -3,6 +3,7 @@ package com.example.spring03.service.member;
 import javax.servlet.http.HttpSession;
 
 import com.example.spring03.model.member.dto.MemberDTO;
+import com.example.spring03.model.order.dto.OrderDTO;
 
 public interface MemberService {
 	public boolean loginCheck(MemberDTO dto, HttpSession session);
@@ -16,4 +17,6 @@ public interface MemberService {
 	public String idcheck(String userid);
 	public String generateEmailVerifyNumber(String email);
 	public int emailVerify(int verifyOrder, int verifyNumber);
+	
+	public OrderDTO orderMember(String userid);
 }

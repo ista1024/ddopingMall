@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.example.spring03.model.member.dto.MemberDTO;
+import com.example.spring03.model.order.dto.OrderDTO;
 
 @Repository
 public class MemberDAOImpl implements MemberDAO {
@@ -85,6 +86,16 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public int emailVerify(int verifyOrder) {
 		return sqlSession.selectOne("member.emailVerify", verifyOrder);
+	}
+
+	@Override
+	public void deleteInvalidatedNum(int order_num) {
+		sqlSession.update("member.deleteInvalidatedNum", order_num);
+	}
+
+	@Override
+	public OrderDTO orderMember(String userid) {
+		return sqlSession.selectOne("member.orderMember", userid);
 	}
 	
 	

@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 <%@ include file="../include/header.jsp" %>
 <script src="${path}/include/js/common.js"></script>
-<script src="${path}/ckeditor/ckeditor.js"></script>
+<script src="${path}/resources/ckeditor/ckeditor.js"></script>
 <!-- Animate.css -->
 <link rel="stylesheet" href="${path}/resources/css/animate.css">
 <!-- Icomoon Icon Fonts-->

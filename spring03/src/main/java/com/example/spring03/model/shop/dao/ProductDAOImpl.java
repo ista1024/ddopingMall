@@ -18,52 +18,51 @@ public class ProductDAOImpl implements ProductDAO {
 
 	@Override
 	public List<ProductDTO> listProduct() {
-		
 		return sqlSession.selectList("shop.list_product");
+	}
+	
+	@Override
+	public List<ProductDTO> listProduct(ProductDTO dto) {
+		return sqlSession.selectList("shop.list_productByType", dto);
 	}
 
 	@Override
 	public ProductDTO detailProduct(int product_num) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectOne("shop.shop_detail", product_num);
+	}
+	
+	@Override
+	public void insertProduct(ProductDTO dto) {
+		sqlSession.insert("shop.product_insert", dto);
 	}
 
 	@Override
 	public void updateProduct(ProductDTO dto) {
-		sqlSession.update("shop.shop_update", dto);
-
+		sqlSession.update("shop.product_update", dto);
 	}
 
 	@Override
 	public void deleteProduct(int product_num) {
-		sqlSession.delete("shop.shop_delete", product_num);
-
-	}
-
-	@Override
-	public void insertProduct(ProductDTO dto) {
-		sqlSession.insert("shop.insert", dto);
-
+		sqlSession.delete("shop.product_delete", product_num);
 	}
 
 	@Override
 	public String fileInfo(int product_num) {
-		
 		return sqlSession.selectOne("shop.fileInfo", product_num);
 	}
 
 	@Override
 	public List<ProductDTO> listProductop(int product_num) {
-		
 		return sqlSession.selectList("shop.op_productop", product_num);
 	}
+	
 	@Override
 	public List<ProductImageDTO> listProductImage(int product_num) {
 		return sqlSession.selectList("shop.list_productimage", product_num);
 	}
+	
 	@Override
 	public List<ProductDTO> listop2(int product_num) {
-		
 		return sqlSession.selectList("shop.op2_list", product_num);
 	}
 

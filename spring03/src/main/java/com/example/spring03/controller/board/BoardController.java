@@ -104,4 +104,9 @@ public class BoardController {
 		boardService.delete(bno);
 		return "redirect:/board/list.do"; //목록으로 이동
 	}
+	@RequestMapping("recommend.do")
+	public String recommend(int bno) throws Exception {
+		boardService.recommend(bno);
+		return "forward:/board/list.do";
+	}
 }

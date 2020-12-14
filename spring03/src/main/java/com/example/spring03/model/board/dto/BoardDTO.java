@@ -16,6 +16,7 @@ public class BoardDTO {
 	private String[] files;
 	private int viewcnt;
 	private String name; //작성자 이름
+	private int recommend;
 	public int getBno() {
 		return bno;
 	}
@@ -82,12 +83,21 @@ public class BoardDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public int getRecommend() {
+		return recommend;
+	}
+	public void setRecommend(int recommend) {
+		this.recommend = recommend;
+	}
 	@Override
 	public String toString() {
 		return "BoardDTO [bno=" + bno + ", userid=" + userid + ", subject=" + subject + ", reg_date=" + reg_date
 				+ ", readcount=" + readcount + ", content=" + content + ", cnt=" + cnt + ", show=" + show + ", files="
-				+ Arrays.toString(files) + ", viewcnt=" + viewcnt + ", name=" + name + "]";
+				+ Arrays.toString(files) + ", viewcnt=" + viewcnt + ", name=" + name + ", recommend=" + recommend + "]";
 	}
+	
+	
+	
 	
 	
 	

@@ -59,8 +59,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   <!-- 주문 정보 -->
 <insert id="orderInfo">
- insert into dpm_order(orderId, userId, orderRec, userAddr1, userAddr2, userAddr3, orderPhon, amount)
- values(#{orderId}, #{userId}, #{orderRec}, #{userAddr1}, #{userAddr2}, #{userAddr3}, #{orderPhon}, #{amount})
+ insert into dpm_order(orderId, userId, name, address, detailAddress, extraAddress, orderPhon, amount)
+ values(#{orderId}, #{userid}, #{name}, #{address}, #{detailAddress}, #{extraAddress}, #{orderPhon}, #{amount})
 </insert>
    
 <!-- 주문 상세 정보 --> 
@@ -73,23 +73,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 특정 유저의 주문 목록 -->
 <select id="orderList" resultType="com.example.spring03.model.order.dto.OrderDTO">
     select
-    orderId, userId, orderRec, userAddr1, userAddr2, userAddr3, orderPhon, amount, orderDate
+    orderId, userid, name, address, detailAddress, extraAddress, orderPhon, amount, orderDate
     from dpm_order 
     where userId = #{userId}
 </select>
+<select id="orderList2" resultType="com.example.spring03.model.order.dto.OrderDTO">
+    select
+    orderId, userId, orderRec, address, detailAddress, extraAddress, orderPhon, amount, orderDate
+    from dpm_order 
+    where userId = #{userId}
+</select>
+
   
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
 
 

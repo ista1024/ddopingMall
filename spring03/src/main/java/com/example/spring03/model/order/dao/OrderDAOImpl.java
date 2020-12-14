@@ -1,3 +1,4 @@
+
 package com.example.spring03.model.order.dao;
 
 import java.util.List;
@@ -34,6 +35,12 @@ public class OrderDAOImpl implements OrderDAO {
 	@Override
 	public List<OrderDTO> orderList(String userId) throws Exception {
 		return sqlSession.selectList("cart.orderList", userId);
+	}
+
+	@Override
+	public List<OrderDTO> orderList2(String userId) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("cart.orderList2", userId);
 	}
 
 }

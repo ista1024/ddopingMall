@@ -28,8 +28,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   <update id="updateMember">
   update dpm_Member
-		set passwd = #{passwd}, hp = #{hp}, hp2 = #{hp2}, hp3 = #{hp3}, email = #{email}, textemail = #{textemail},
-			postcode = #{postcode}, address = #{address}, detailAddress = #{detailAddress}, extraAddress = #{extraAddress}			
+		set passwd = #{passwd}, postcode = #{postcode}, 
+		address = #{address}, detailAddress = #{detailAddress}, extraAddress = #{extraAddress}			
 		where userid = #{userid}
   </update>
   
@@ -76,6 +76,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from dpm_email_verify
 		where order_num = #{order_num}
 	</select>
+	
+	<update id="deleteInvalidatedNum">
+		update dpm_email_verify
+		set verifyNumber = null
+		where order_num = #{order_num}
+	</update>
 
 	<!-- <insert id="join">
 		insert into dpm_Member (userid, passwd, name, hp, ) 

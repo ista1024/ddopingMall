@@ -9,10 +9,57 @@
 </head>
 
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
 <style>
 	.btnHide{
 		display: none;
 	}
+	
+a:visited {
+   text-decoration: underline;
+   color: black;}
+a:link {text-decoration: none; color: ; }
+a:hover {
+   text-decoration:none;  color: underlblack;
+   }
+
+* {
+    box-sizing: border-box;
+}
+body{
+	justify-content: center; 
+	display: flex; 
+	 
+	text-align: ;
+	
+	/* line-height: 50px; */
+	background: white;
+	
+	}
+
+	#header span {
+	font-family: 'Monoton', cursive;
+	color: white;
+}
+#form1{
+	background-color: #F2F2F2;
+	position: relative;
+	z-index: 2;
+	padding: 100px;
+}
+#btnjoin {
+width: 60%; height: 40px;
+background: black;
+opacity: 0.5;
+color: gray;
+font-size: 20px;
+border: none;
+border-radius: 25px; 
+cursor: pointer;
+outline: none;
+color: white;
+}
 </style>
 <script>
 	
@@ -103,9 +150,10 @@ $(function(){
 			    	document.getElementById("btnVerifyEmail").disabled = false;
 			    	document.getElementById("btnVerifyEmail").classList.toggle("btnHide");
 			    	document.getElementById("sendEmailVerify").disabled = true;
-			    	document.getElementById("email").disabled = true;
-			    	document.getElementById("textemail").disabled = true;
-			    	document.getElementById("select").disabled = true;
+			    	document.getElementById("sendEmailVerify").readOnly = true;
+			    	document.getElementById("email").readOnly = true;
+			    	document.getElementById("textemail").readOnly = true;
+			    	document.getElementById("select").readOnly = true;
 				}
 			}
 		});
@@ -407,30 +455,45 @@ $(function() {
 
 </script>
 <body>
-<%@ include file="../include/menu.jsp" %>
-<h2>회원가입</h2>
-<form name="form1" method="post">
-<table border="1" width="1000px">
+<div id="wrapper">
+<header id="fh5co-header" role="banner" style="text-align: center;">
+			<div class="container text-center">
+				<div id="header">
+					<span><a href="${path}/main/home.do" style="font-size: 130px;">D P M</a></span>	
+				</div>
+			</div>
+		</header>
+<form name="form1" method="post" style="padding:30px; background-color: #F2F2F2;">
+<h2 style="text-align: center; ">회원가입</h2>
+<table  style="width: 450px; height: 600px; ">
   <tr>
     <td>아이디</td>
     <td>
-    <input name="userid" id="userid"><button type="button" id="aa" name="aa">중복확인</button>
+    <input style="width: 100px; height: 30px;" name="userid" id="userid" autocomplete="off"><button style="height: 30px;" type="button" id="aa" name="aa">중복확인</button>
+    <br>
+    *영문 대소문자 최소 1글자가 포함된 3~19자리
     <span id="idcheck"></span><input type="hidden" name="ddd" id="ddd" value=0>
     </td>
   </tr>
   <tr>
     <td>비밀번호</td>
-    <td><input type="password" name="passwd" id="passwd"> </td>
+    <td><input style="height: 30px;" type="password" name="passwd" id="passwd"> 
+    <br>
+    *영문 대소문자, 숫자, 특수문자가 조합된 8~16자리</td>
   </tr>
   <tr>
     <td>이름</td>
-    <td><input name="name" id="name"> </td>
+    <td><input style="height: 30px;" name="name" id="name" autocomplete="off">
+    <br>
+    *한글만 입력 가능 2~6자리
+     </td>
+    
   </tr>
   <tr>
-    <td>전화번호</td>
+    <td>연락처</td>
     <td>
-    <select id="select2">
-    	<option value="" disabled selected>전화번호 선택</option>
+    <select id="select2" style="width: 60px; height: 20px;">
+    	<option value="" disabled selected>선택</option>
     	<option value="010" id="010">010</option>
     	<option value="011" id="011">011</option>
     	<option value="017" id="017">017</option>
@@ -454,16 +517,16 @@ $(function() {
         <option value="064" id="064">064</option>
         <option value="directly" id="textEmail">직접 입력하기</option>
     </select>
-     <input name="hp" id="hp">
-     - <input name="hp2" id="hp2"> - <input name="hp3" id="hp3"></td>
+     <input autocomplete="off" style="width: 60px; height: 20px;" placeholder="02" name="hp" id="hp" >
+     - <input style="width: 60px; height: 20px;" autocomplete="off" placeholder="1234" name="hp2" id="hp2"> - <input style="width: 60px; height: 20px;" autocomplete="off" placeholder="5678" name="hp3" id="hp3"></td>
   </tr>
   <tr id="emailAppend">
     <td>E-mail</td>
     <td>
-    <input type="text" name="email" id="email" value="" placeholder="이메일 입력"> 
+    <input style="width: 100px;" type="text" name="email" id="email" value="" autocomplete="off" placeholder="이메일 입력"> 
     <span>@</span>
- 	<input name="textemail" id="textemail" placeholder="이메일을 선택하세요."> 
- 	<select id="select">
+ 	<input style="width: 85px;" name="textemail" id="textemail" autocomplete="off" placeholder="이메일 입력"> 
+ 	<select style="width: 60px;" id="select">
     	<option value="" disabled selected>E-mail 선택</option>
         <option value="naver.com" id="naver.com">naver.com</option>
         <option value="hanmail.net" id="hanmail.net">hanmail.net</option>
@@ -471,25 +534,27 @@ $(function() {
         <option value="nate.com" id="nate.com">nate.com</option>
         <option value="directly" id="textEmail">직접 입력하기</option>
     </select>
+    <br>
     	<button type="button" id="sendEmailVerify" name="sendEmailVerify">이메일 인증</button>
     	<div id="appendTarget">
-    		<input class="btnHide" type='number' name='verifyNumber' id='verifyNumber' placeholder='인증번호를 입력하세요' disabled><input class="btnHide" type='hidden' name='verifyOrder' id='verifyOrder' readonly disabled>
+    		<input class="btnHide" type='number' name='verifyNumber' id='verifyNumber' autocomplete="off" placeholder='인증번호를 입력하세요' disabled><input class="btnHide" type='hidden' name='verifyOrder' id='verifyOrder' readonly disabled>
     		<button type='button' class="btnHide" id='btnVerifyEmail' name='btnVerifyEmail' disabled>인증</button>
     		<input type="hidden" name="email_ver" id="email_ver" value=0>
     	</div>
     </td>
 
-  </tr>
+  </tr> 
   <tr>
     <td>주소</td>
     <td>
-<input type="text" name="postcode" id="postcode" placeholder="우편번호">
-<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
-<input type="text" name="address" id="address" placeholder="주소"><br>
-<input type="text" name="detailAddress" id="detailAddress" placeholder="상세주소">
-<input type="text" name="extraAddress" id="extraAddress" placeholder="참고항목">
+<input style="height: 30px;" type="text" name="postcode" id="postcode" autocomplete="off" placeholder="우편번호">
+<input style="height: 30px;" type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
+<input style="width: 282px; height: 30px;" type="text" name="address" id="address" autocomplete="off" placeholder="주소"><br>
+<input style="width: 146px; height: 30px;" type="text" name="detailAddress" id="detailAddress" autocomplete="off" placeholder="상세주소">
+<input style="width: 130px; height: 30px;" type="text" name="extraAddress" id="extraAddress" autocomplete="off" placeholder="참고항목">
      </td>
   </tr>
+  
   <tr>
     <td colspan="2" align="center">
       <input type="button" id="btnjoin" value="회원가입">
@@ -498,6 +563,6 @@ $(function() {
   </table>
   </form>
 
-
+</div>
 </body>
 </html>

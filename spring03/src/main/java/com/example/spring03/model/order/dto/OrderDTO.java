@@ -1,29 +1,29 @@
 package com.example.spring03.model.order.dto;
 
-import java.util.Date;
-
 public class OrderDTO {
 	private String orderId;
-	private String userId;
+	private String userid;
 	private String orderRec;
-	private String userAddr1;
-	private String userAddr2;
-	private String userAddr3;
+	private String address;
+	private String detailAddress;
+	private String extraAddress;
 	private String orderPhon;
+	private String hp;
+	private String hp2;
+	private String hp3;
 	private int amount;
-	private Date orderDate;
-	
+	private String name;
 	public String getOrderId() {
 		return orderId;
 	}
 	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
-	public String getUserId() {
-		return userId;
+	public String getuserid() {
+		return userid;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setuserid(String userid) {
+		this.userid = userid;
 	}
 	public String getOrderRec() {
 		return orderRec;
@@ -31,23 +31,23 @@ public class OrderDTO {
 	public void setOrderRec(String orderRec) {
 		this.orderRec = orderRec;
 	}
-	public String getUserAddr1() {
-		return userAddr1;
+	public String getAddress() {
+		return address;
 	}
-	public void setUserAddr1(String userAddr1) {
-		this.userAddr1 = userAddr1;
+	public void setAddress(String address) {
+		this.address = address;
 	}
-	public String getUserAddr2() {
-		return userAddr2;
+	public String getDetailAddress() {
+		return detailAddress;
 	}
-	public void setUserAddr2(String userAddr2) {
-		this.userAddr2 = userAddr2;
+	public void setDetailAddress(String detailAddress) {
+		this.detailAddress = detailAddress;
 	}
-	public String getUserAddr3() {
-		return userAddr3;
+	public String getExtraAddress() {
+		return extraAddress;
 	}
-	public void setUserAddr3(String userAddr3) {
-		this.userAddr3 = userAddr3;
+	public void setExtraAddress(String extraAddress) {
+		this.extraAddress = extraAddress;
 	}
 	public String getOrderPhon() {
 		return orderPhon;
@@ -61,17 +61,37 @@ public class OrderDTO {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-	public Date getOrderDate() {
-		return orderDate;
+	public String getName() {
+		return name;
 	}
-	public void setOrderDate(Date orderDate) {
-		this.orderDate = orderDate;
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getHp() {
+		return hp;
+	}
+	public void setHp(String hp) {
+		this.hp = hp;
+	}
+	public String getHp2() {
+		return hp2;
+	}
+	public void setHp2(String hp2) {
+		this.hp2 = hp2;
+	}
+	public String getHp3() {
+		return hp3;
+	}
+	public void setHp3(String hp3) {
+		this.hp3 = hp3;
 	}
 	@Override
 	public String toString() {
-		return "OrderDTO [orderId=" + orderId + ", userId=" + userId + ", orderRec=" + orderRec + ", userAddr1="
-				+ userAddr1 + ", userAddr2=" + userAddr2 + ", userAddr3=" + userAddr3 + ", orderPhon=" + orderPhon
-				+ ", amount=" + amount + ", orderDate=" + orderDate + "]";
+		return "OrderDTO [orderId=" + orderId + ", userid=" + userid + ", orderRec=" + orderRec + ", address=" + address
+				+ ", detailAddress=" + detailAddress + ", extraAddress=" + extraAddress + ", orderPhon=" + orderPhon
+				+ ", hp=" + hp + ", hp2=" + hp2 + ", hp3=" + hp3 + ", amount=" + amount + ", name=" + name + "]";
 	}
+	
+	
 
 }

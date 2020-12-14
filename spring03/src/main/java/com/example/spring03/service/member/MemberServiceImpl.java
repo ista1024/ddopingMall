@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.spring03.model.member.dao.MemberDAO;
 import com.example.spring03.model.member.dto.MemberDTO;
+import com.example.spring03.model.order.dto.OrderDTO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -119,6 +120,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.getOrderNumber(email, verifyNumber);
 	}
 
+	@Transactional
 	@Override
 	public int emailVerify(int verifyOrder, int verifyNumber) {
 		int result = 0;
@@ -127,8 +129,14 @@ public class MemberServiceImpl implements MemberService {
 			result = -1;
 		} else {
 			result = 1;
+			memberDao.deleteInvalidatedNum(verifyOrder);
 		}
 		return result;
+	}
+
+	@Override
+	public OrderDTO orderMember(String userid) {
+		return memberDao.orderMember(userid);
 	}
 	
 	

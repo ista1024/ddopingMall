@@ -8,6 +8,14 @@
 		<title>Insert title here</title>
 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 		<!-- <script type="text/javascript" src="https://www.google.com/jsapi"></script> -->
+		<style type="text/css">
+			#chart_div1 {
+				display: table;
+				margin: 0 auto;
+				width: 600px; 
+				height: 440px;
+			}
+		</style>
 		<script type="text/javascript">
 			// 구글 차트 라이브러리 로딩
 			google.load("visualization","1",{"packages":["corechart"]});
@@ -36,7 +44,7 @@
 	</head>
 	<body>
 		<%@ include file="../include/admin_menu.jsp" %>
-		<div id="chart_div1" style="width: 600px; height: 440px;"></div>
+		<div id="chart_div1"></div>
 		<div id="chart_div2"></div>
 		<div id="chart_div3"></div>
 		<button id="btn" type="button" onclick="drawChart()">refresh</button>

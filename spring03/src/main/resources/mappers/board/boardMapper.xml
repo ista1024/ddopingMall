@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 resultType="com.example.spring03.model.board.dto.BoardDTO">
 		<include refid="paging_header" />
 			select b.bno,b.subject, b.userid, m.name, b.reg_date, b.readcount, b.show
-  				,(select count(*) from dpm_comment where bno=b.bno) cnt					
+  				,(select count(*) from dpm_comment where bno=b.bno) cnt,b.recommend					
 			from dpm_board b, dpm_member m
 			<include refid="search" />
 			order by b.bno desc   
@@ -60,7 +60,7 @@ resultType="com.example.spring03.model.board.dto.BoardDTO">
   </update>
   
   <select id="read" resultType="com.example.spring03.model.board.dto.BoardDTO">
-    select b.bno, b.subject, b.userid, m.name, b.content,b.reg_date, b.readcount
+    select b.bno, b.subject, b.userid, m.name, b.content,b.reg_date, b.readcount,b.recommend	
 	from dpm_board b, dpm_member m
 	where b.userid=m.userid and bno=#{bno}
   </select>
@@ -94,6 +94,12 @@ resultType="com.example.spring03.model.board.dto.BoardDTO">
   <delete id="delete">
     update dpm_board set show='N' where bno=#{bno} 
   </delete>
+  
+  <!-- 추천 -->
+  <update id="recommend">
+  update dpm_board set recommend = recommend+1
+  where bno=#{bno}
+  </update>
   
 	
 </mapper>

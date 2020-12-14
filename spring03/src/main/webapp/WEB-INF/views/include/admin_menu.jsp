@@ -1,17 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<hr>
-<a href="${path}/main/home.do">Home</a> |
-<a href="${path}/admin/home.do">AdminHome</a> |
-<a href="${path}/admin/listAllMember.do">회원 리스트</a> |
-<a href="${path}/admin/product_write.do">상품등록</a> |
-<a href="${path}/admin/pdf_list.do">PDF</a> |
-<a href="${path}/admin/chart1.do">구글차트(json)</a> |
-<a href="${path}/admin/chart2.do">구글차트(db)</a> |
-<a href="${path}/admin/email_write.do">이메일 발송</a> |
-
-<div style="text-align: right;">
+<!-- Icomoon Icon Fonts-->
+<link rel="stylesheet" href="${path}/resources/css/icomoon.css">
+<!-- Bootstrap  -->
+<link rel="stylesheet" href="${path}/resources/css/bootstrap.css">
+<link rel="stylesheet" href="${path}/resources/admin/css/style.css">
+<!--[if lt IE 9]><script src="${path}/resources/js/respond.min.js"></script><![endif]-->
+		
+<header id="fh5co-header" role="banner">
+	<div class="container text-center">
+		<div id="header">
+			<h6><a href="${path}/main/home.do">D P M</a></h6>	
+		</div>
+		<nav>
+			<hr>
+			<ul>
+				<li><a href="${path}/main/home.do"><button><i class="icon-home"></i><p>메인</p></button></a></li>
+				<li><a href="${path}/admin/adminHome.do"><button><i class="icon-home2"></i><p>관리자홈</p></button></a></li>
+				<li><a href="${path}/admin/listAllMember.do"><button><i class="icon-users"></i><p>회원리스트</p></button></a></li>
+				<li><a href="${path}/admin/product_write.do"><button><i class="icon-pricetags"></i><p>상품등록</p></button></a></li>
+				<li><a href="${path}/admin/chart1.do"><button><i class="icon-pie-chart"></i><p>파이차트</p></button></a></li>
+				<li><a href="${path}/admin/chart2.do"><button><i class="icon-pie-chart2"></i><p>파이차트</p></button></a></li>
+				<li><a href="${path}/admin/email_write.do"><button><i class="icon-envelope"></i><p>이메일</p></button></a></li>
+			</ul>
+		</nav>
+	</div>
+</header>
+<div style="text-align: right; padding-top: 15px;">
   <c:choose>
     <c:when test="${sessionScope.admin_userid == null }">
 		<c:redirect url="${path}/main/home.do" />

@@ -7,12 +7,15 @@ public class ProductDTO {
 	private String product_name;//게시물 이름
 	private String product_code;//게시물 코드
 	private int product_price;//가격
+	private String product_type; // 품목
 	private String product_photo;//기본사진
 	private String product_main_photo;//메인사진
 	private String product_description;//설명
+	private int product_amount; // 수량
 	private String product_option1;//사이즈
 	private String product_option2;//색상
 	private MultipartFile file1;//첨부파일
+	private MultipartFile file2;//첨부파일
 	public int getProduct_num() {
 		return product_num;
 	}
@@ -73,16 +76,32 @@ public class ProductDTO {
 	public void setFile1(MultipartFile file1) {
 		this.file1 = file1;
 	}
+	public String getProduct_type() {
+		return product_type;
+	}
+	public void setProduct_type(String product_type) {
+		this.product_type = product_type;
+	}
+	public int getProduct_amount() {
+		return product_amount;
+	}
+	public void setProduct_amount(int product_amount) {
+		this.product_amount = product_amount;
+	}
+	public MultipartFile getFile2() {
+		return file2;
+	}
+	public void setFile2(MultipartFile file2) {
+		this.file2 = file2;
+	}
 	@Override
 	public String toString() {
 		return "ProductDTO [product_num=" + product_num + ", product_name=" + product_name + ", product_code="
-				+ product_code + ", product_price=" + product_price + ", product_photo=" + product_photo
-				+ ", product_main_photo=" + product_main_photo + ", product_description=" + product_description
+				+ product_code + ", product_price=" + product_price + ", product_type=" + product_type
+				+ ", product_photo=" + product_photo + ", product_main_photo=" + product_main_photo
+				+ ", product_description=" + product_description + ", product_amount=" + product_amount
 				+ ", product_option1=" + product_option1 + ", product_option2=" + product_option2 + ", file1=" + file1
-				+ "]";
+				+ ", file2=" + file2 + "]";
 	}
 	
-	
-
-
 }

@@ -18,5 +18,6 @@ public interface BoardService {
 	public void increateViewcnt(int bno, HttpSession session) throws Exception; //조회수 증가
 	public int countArticle(String serach_option, String keyword) throws Exception; //레코드 갯수 계산
 	public BoardDTO read(int bno) throws Exception; //레코드 조회
+	public void recommend(int bno) throws Exception;//추천하기
 
 }

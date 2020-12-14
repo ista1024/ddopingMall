@@ -23,9 +23,10 @@ public class ProductController {
 	ProductService productService;
 	
 	@RequestMapping("list.do")
-	public ModelAndView list(ModelAndView mav) {
+	public ModelAndView list(ModelAndView mav, String product) {
+		System.out.println("list.do 호출한 product type : " + product);
 		List<ProductDTO> list=productService.listProduct();
-		mav.setViewName("shop/shop_list");
+		mav.setViewName("redirect:/main/home.do");
 		mav.addObject("list", list);
 		System.out.println(list);
 		return mav;
@@ -63,30 +64,46 @@ public class ProductController {
 			dto.setProduct_main_photo(dto2.getProduct_main_photo());
 		}
 		productService.updateProduct(dto);
-		return "redirect:/shop/shop/list.do";
+		return "redirect:/main/home.do";
 	}
+	
 	@RequestMapping("write.do")
 	public String write() {
 		return "shop/shop_write";
 	}
+	
 	@RequestMapping("insert.do")
 	public String insert(@ModelAttribute ProductDTO dto) {
-		String filename="-";
+		String filename1="-";
+		String filename2="-";
 		if(!dto.getFile1().isEmpty()) {
-			filename=dto.getFile1().getOriginalFilename();
+			filename1=dto.getFile1().getOriginalFilename();
 			try {
 				String path="D:\\work\\.metadata\\.plugins\\org.eclipse.wst.server.core"
 						+ "\\tmp0\\wtpwebapps\\spring03\\WEB-INF\\views\\images\\";
 				new File(path).mkdir();
-				dto.getFile1().transferTo(new File(path+filename));
+				dto.getFile1().transferTo(new File(path+filename1));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		dto.setProduct_main_photo(filename);
+		if(!dto.getFile2().isEmpty()) {
+			filename2=dto.getFile1().getOriginalFilename();
+			try {
+				String path="D:\\work\\.metadata\\.plugins\\org.eclipse.wst.server.core"
+						+ "\\tmp0\\wtpwebapps\\spring03\\WEB-INF\\views\\images\\";
+				new File(path).mkdir();
+				dto.getFile1().transferTo(new File(path+filename2));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		dto.setProduct_photo(filename1);
+		dto.setProduct_main_photo(filename2);
 		productService.insertProduct(dto);
-		return "redirect:/shop/shop/list.do";
+		return "redirect:/main/home.do";
 	}
+	
 	@RequestMapping("edit/{product_num}")
 	public ModelAndView edit(@PathVariable("product_num") int product_num,
 			ModelAndView mav) {
@@ -106,6 +123,6 @@ public class ProductController {
 			}
 		}
 		productService.deleteProduct(product_num);
-		return "redirect:/shop/shop/list.do";
+		return "redirect:/main/home.do";
 	}
 }

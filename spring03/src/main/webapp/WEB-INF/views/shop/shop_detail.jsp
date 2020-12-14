@@ -7,6 +7,18 @@
 <title>Insert title here</title>
 <%@ include file="../include/header.jsp" %>
 <script src="${path}/include/js/common.js"></script>
+<!-- Icomoon Icon Fonts-->
+<link rel="stylesheet" href="${path}/resources/css/icomoon.css">
+<!-- Bootstrap  -->
+<link rel="stylesheet" href="${path}/resources/css/bootstrap.css">
+<link rel="stylesheet" href="${path}/resources/css/style.css">
+<style type="text/css">
+	td {
+		padding-bottom: 15px;
+		color: black;
+	}
+</style>
+
 <script type="text/javascript">
 $(function(){ //자동으로 실행되는 코드
 	//댓글 목록 출력
@@ -42,23 +54,6 @@ $(function(){ //자동으로 실행되는 코드
 	}
 </script>
 
-
-<!-- Animate.css -->
-<link rel="stylesheet" href="${path}/resources/css/animate.css">
-<!-- Icomoon Icon Fonts-->
-<link rel="stylesheet" href="${path}/resources/css/icomoon.css">
-<!-- Bootstrap  -->
-<link rel="stylesheet" href="${path}/resources/css/bootstrap.css">
-<!-- Superfish -->
-<link rel="stylesheet" href="${path}/resources/css/superfish.css">
-<!-- Flexslider  -->
-<link rel="stylesheet" href="${path}/resources/css/flexslider.css">
-
-<link rel="stylesheet" href="${path}/resources/css/style.css">
-
-<link rel="preconnect" href="https://fonts.gstatic.com">
-
-
 </head>
 <body>
 <%-- <%@ include file="../include/menu.jsp" %> --%>
@@ -69,91 +64,91 @@ $(function(){ //자동으로 실행되는 코드
 			<h6><a href="${path}/main/home.do">D P M</a></h6>	
 		</div>
 		<nav>
-			<ul>
-				<li><a href="${path}/main/menubar.do?product=best">Best</a></li>
+			<ul >
+				<li ><a href="${path}/main/menubar.do?product=best">Best</a></li>
 				<li><a href="${path}/main/menubar.do?product=top">Top</a></li>
 				<li><a href="${path}/main/menubar.do?product=pants">Pants</a></li>
+				<li><a href="${path}/board/list.do">Review</a></li>
 			</ul>
 		</nav>
 	</div>
+		
 </header>
 
-<h2 align="center">상품정보</h2>
+ 
+<h2 align="center">상품정보</h2><br>
+
 <table align="center">
   <tr>
-     <td>
+     <td style="padding-right:40px;">
      <img src="${path}/resources/images/${dto.product_photo}" 
      width="300px" > </td>
      <td align="center">
+              <form name="form1" method="post" action="${path}/shop/cart/insert.do" style="display: inline;">
        <table style="height:300px; width:400px;">
-           
-         <tr>
-           <td style="width:20%">상품명 </td>
-           <td>${dto.product_name} </td>
-         </tr>
-         
-         <tr>
-          <td>상품설명 </td>
-           <td>${dto.product_description} </td>
-         </tr>
-         
-         <tr>
-          <td>사이즈 </td>
-           <td>${dto.product_option1} </td>
-         </tr>
-         
-         <tr>
-           <td>가격 </td>
-           <td>${dto.product_price} </td>
           
-         </tr>
-
-         <tr align="center">     
-         <td colspan="2"><a href="">구매하기</a>
+         <tr>
+           <td style="width:20%" valign="top">상품명 <input type="hidden" name="product_num" id="product_num" value="${dto.product_num}"></td>
+           <td colspan="3">${dto.product_name} </td>
          </tr>
          
-         <tr align="center">
-         <td colspan="2"><select name="amount">
-         <c:forEach begin="1" end="10" var="i">
-         <option value="${i}">${i}</option>
-         </c:forEach>
-         </select>&nbsp;수량&nbsp;&nbsp;
+         <tr>   
+          <td valign="top">상품설명 </td>
+           <td colspan="3">${dto.product_description} </td>  
+         </tr>
          
-        <input type="hidden" name="product" value="6">
-         <div class="product_op">
-           <select>
-           <c:forEach var="row" items="${op_list}">
-			<option value="${row.product_option1}">${row.product_option1}</option>
-           </c:forEach>
-			</select>&nbsp;사이즈
-			 <select>
-               <c:forEach var="row" items="${op2_list}"> 
-				<option value="${row.product_option2}">${row.product_option2}
-				</c:forEach>
-               </select>&nbsp;색상
-         </div>
+         
+         <tr>
+          <td valign="top">사이즈 </td>
+           <td colspan="3">${dto.product_option1} </td>
+         </tr>
+         
+         <tr>
+           <td>가격</td>
+           <td><fmt:formatNumber value="${dto.product_price}" pattern="#,###" /> </td>
+         	<td>수량</td>
+         	<td>
+         		<select name="amount">
+		    	     <c:forEach begin="1" end="10" var="i">
+			         <option value="${i}">${i}</option>
+			         </c:forEach>
+		         </select>
+	         </td>
+         </tr>
+         <tr>
+         	<td>사이즈</td>
+         	<td>
+	        <input type="hidden" name="product" value="6">
+	           <select>
+	           <c:forEach var="row" items="${op_list}">
+				<option value="${row.product_option1}">${row.product_option1}</option>
+	           </c:forEach>
+				</select>
+			</td>
+         	<td>색상</td>
+         	<td>
+				 <select>
+	               <c:forEach var="row" items="${op2_list}"> 
+					<option value="${row.product_option2}">${row.product_option2}
+					</c:forEach>
+               </select>
          </td>
          </tr>
-        
-         <tr align="center">
-         <td colspan="2"><a href="${path}/shop/shop/list.do">상품목록</a>
+
+      
+         
+         <tr align="center">        
          </tr>
+  
          <tr align="center">
-          <td colspan="2">
-            <form name="form1" method="post" action="${path}/shop/cart/insert.do">
-            <input type="hidden" name="product_num" value="${dto.product_num}">
-            <select name="amount">
-                 <c:forEach begin="1" end="10" var="i">
-                   <option value="${i}">${i} </option>
-                 </c:forEach>
-               </select>
-               <input type="submit" value="장바구니에 담기">
-            </form>
-          
+          <td colspan="2" style="color: black">
+
+         <input style="color: black" type="submit" value="장바구니에 담기">
+               
           </td>
-         </tr>
-        
+         </tr>        
        </table>
+             </form>
      </td>
   </tr>
 </table>
@@ -165,6 +160,14 @@ $(function(){ //자동으로 실행되는 코드
 		<img src="${path}/resources/images/${row2.product_photoUrl}"><br><br>
 	</c:forEach>
 </div>
+
+
+<div align="center">
+<img src="${path}/resources/images/footer_inform.jpg">
+</div>
+
+
+
 <div align="center">
 <div style="width:700px; align-content:center; text-align:center;">
  <c:if test="${sessionScope.userid != null }">
@@ -182,7 +185,7 @@ $(function(){ //자동으로 실행되는 코드
 <footer id="fh5co-footer" role="contentinfo">
 	<div class="container-fluid">
 		<div class="footer-content">
-			<div class="copyright"><small>&copy; 2020 DDO PING MALL. All Rights Reserved. <br></small></div>
+			<div class="copyright" style="color: black"><small>&copy; 2020 DDO PING MALL. All Rights Reserved. <br></small></div>
 				<div class="social">
 					<a href="#"><i class="icon-facebook3"></i></a>
 					<a href="https://www.instagram.com/lee_jae_hyounggggg/"><i class="icon-instagram2"></i></a>

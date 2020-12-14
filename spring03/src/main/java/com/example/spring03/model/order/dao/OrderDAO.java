@@ -10,5 +10,6 @@ public interface OrderDAO {
 	public void orderInfo_Details(OrderDetailDTO orderDetail);
 	public void cartAllDelete(String userId) throws Exception;
 	public List<OrderDTO> orderList(String userId) throws Exception;
+	public List<OrderDTO> orderList2(String userId) throws Exception;
 
 }

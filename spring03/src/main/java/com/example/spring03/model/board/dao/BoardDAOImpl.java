@@ -88,5 +88,9 @@ public class BoardDAOImpl implements BoardDAO {
 	public BoardDTO read(int bno) throws Exception {
 		return sqlSession.selectOne("board.read", bno);
 	}
-
+	
+	@Override
+	public void recommend(int bno) throws Exception{
+		sqlSession.update("board.recommend", bno);
+	}
 }

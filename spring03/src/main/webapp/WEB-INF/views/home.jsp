@@ -8,21 +8,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>D P M</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
-		<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
-		<meta name="author" content="FREEHTML5.CO" />
 		<%@ include file="include/header.jsp" %>
-		
-		<!-- Facebook and Twitter integration -->
-		<meta property="og:title" content=""/>
-		<meta property="og:image" content=""/>
-		<meta property="og:url" content=""/>
-		<meta property="og:site_name" content=""/>
-		<meta property="og:description" content=""/>
-		<meta name="twitter:title" content="" />
-		<meta name="twitter:image" content="" />
-		<meta name="twitter:url" content="" />
-		<meta name="twitter:card" content="" />
 		
 		<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 		<link rel="shortcut icon" href="favicon.ico">
@@ -36,10 +22,6 @@
 		<link rel="stylesheet" href="${path}/resources/css/icomoon.css">
 		<!-- Bootstrap  -->
 		<link rel="stylesheet" href="${path}/resources/css/bootstrap.css">
-		<!-- Superfish -->
-		<link rel="stylesheet" href="${path}/resources/css/superfish.css">
-		<!-- Flexslider  -->
-		<link rel="stylesheet" href="${path}/resources/css/flexslider.css">
 		
 		<link rel="stylesheet" href="${path}/resources/css/style.css">
 		
@@ -60,9 +42,9 @@
 				</div>
 				<nav>
 					<ul>
-						<li><a href="${path}/main/menubar.do?product=best">Best</a></li>
-						<li><a href="${path}/main/menubar.do?product=top">Top</a></li>
-						<li><a href="${path}/main/menubar.do?product=pants">Pants</a></li>
+						<li><a href="${path}/main/menubar.do?product_type=best">Best</a></li>
+						<li><a href="${path}/main/menubar.do?product_type=top">Top</a></li>
+						<li><a href="${path}/main/menubar.do?product_type=pants">Pants</a></li>
 						<li><a href="${path}/board/list.do">Review</a></li>
 					</ul>
 				</nav>
@@ -78,34 +60,31 @@
 		</div>
 		
 		<!-- 우측 메뉴1 -->
-		<div class="header_right1-1">
+		<div class="header_right1">
 			<a href=""><i class="icon-chevron-up" style="font-size: 30px;"></i></a><br><br>
-			<a href="#"><i class="icon-chevron-down" style="font-size: 30px;"></i></a>
+			<a href="#"><i class="icon-chevron-down" style="font-size: 30px;"></i></a><br><br>
+			<a href="${path}/shop/cart/list.do"><i class="icon-shopping-cart fa-5x" style="font-size: 30px"></i></a><br><br>
+			<c:if test="${sessionScope.userid != null}">
+				<a href="${path}/shop/cart/orderList"><i class="icon-list fa-5x" style="font-size: 30px"></i></a>
+			</c:if>
+			<!-- 우측 메뉴2 -->
+			<div class="header_right2" style="letter-spacing: 8px;">
+				<c:choose>
+					<c:when test="${sessionScope.userid == null }">
+						<!-- 로그인하지 않은 상태  -->
+				  		<a href="${path}/member/login.do">LOGIN</a>
+					</c:when>
+					<c:otherwise>
+						<!-- 로그인한 상태 -->
+						<a href="${path}/member/memberUpdateView.do">MYPAGE</a> |
+						<a href="${path}/member/logout.do">LOGOUT</a> 
+						<c:if test="${sessionScope.member_verify >= 2}">
+							| <a href="${path}/admin/adminHome.do">ADMIN</a>
+						</c:if>
+					</c:otherwise>
+				</c:choose>
+			</div>
 		</div>
-		<div class="header_right1-3">
-			<a href="#"><i class="icon-shopping-cart fa-5x" style="font-size: 30px"></i></a>
-		</div>
-		
-		<!-- 우측 메뉴2 -->
-		<c:choose>
-			<c:when test="${sessionScope.userid == null }">
-				<div class="header_right2-1" style="letter-spacing: 8px;">
-					<!-- 로그인하지 않은 상태  -->
-			  		<a href="${path}/member/login.do">LOGIN</a> |
-			  		<a href="${path}/member/join.do">JOIN</a>
-		  		</div>
-			</c:when>
-			<c:otherwise>
-				<div class="header_right2-2" style="letter-spacing: 8px;">
-					<!-- 로그인한 상태 -->
-					<a href="${path}/member/memberUpdateView.do">MYPAGE</a> |
-					<a href="${path}/member/logout.do">LOGOUT</a> 
-					<c:if test="${sessionScope.member_verify >= 2}">
-						| <a href="${path}/admin/listAllMember.do">ADMIN</a>
-					</c:if>
-				</div>
-			</c:otherwise>
-		</c:choose>
 		
 		<div class="container-fluid pt70 pb70">
 			<div id="fh5co-projects-feed" class="fh5co-projects-feed clearfix masonry">
@@ -114,6 +93,9 @@
 						<a href="${path}/shop/shop/detail/${row.product_num}">
 						<img src="${path}/resources/images/${row.product_main_photo}" alt="Free HTML5 by FreeHTML5.co">
 						<h2>${row.product_name}</h2>
+						<c:if test="${sessionScope.member_verify >= 2}">
+							<a href="${path}/admin/product_edit/${row.product_num}"><button type="button">편집</button></a>
+						</c:if>
 						</a>
 					</div>
 				</c:forEach>

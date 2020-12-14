@@ -130,100 +130,81 @@ $(function(){
 </script>
  </div>
  <div class="orderInfo">
- <form role="form" method="post" autocomplete="off" action="${path}/shop/cart/order.do">
+ <form role="form" method="post" autocomplete="off" action="${path}/shop/cart/buy.do">
   <input type="hidden" name="amount" value="${map.sum}" />
   <input type="hidden" name="userid" value="${sessionScope.userid}" />
   <div class="inputArea">
    <label for="">수령인</label>
-   <input type="text" name="orderRec" id="orderRec" readonly value="${sessionScope.name}"/>
+   <input type="text" name="name" id="name" readonly value="${sessionScope.name}"/>
   </div>
   <div class="inputArea">
    <label for="orderPhon">수령인 연락처</label>
-   <input type="text" name="orderPhon" id="orderPhon" readonly value="${sessionScope.hp}" />
+   <input type="text" name="orderPhon" id="orderPhon" readonly value="${sessionScope.hp}-${sessionScope.hp2}-${sessionScope.hp3}" />
   </div>
   
   <div class="inputArea">
-   <p>
-    <input type="text" id="sample2_postcode" placeholder="우편번호">
-    <input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기"><br>
-   </p> 
-   <p>
-    <input type="text" name="userAddr1" id="sample2_address" placeholder="주소"><br>
-    <input type="text" name="userAddr2" id="sample2_detailAddress" placeholder="상세주소">
-    <input type="text" name="userAddr3" id="sample2_extraAddress" placeholder="참고항목">
-   </p> 
+   <label class="control-label" for="addr">주소</label><br>
+   <input type="text" id="postcode" name="postcode" value="${sessionScope.postcode}"/>
+   <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
+   <input type="text" id="address" name="address" value="${sessionScope.address}"/><br>
+   <input type="text" id="detailAddress" name="detailAddress" value="${sessionScope.detailAddress}"/>
+   <input type="text" id="extraAddress" name="extraAddress" value="${sessionScope.extraAddress}"/>
   </div>
   
-<div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
+    <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
 <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 </div>
 
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-    var element_layer = document.getElementById('layer');
-
-    function closeDaumPostcode() {
-        element_layer.style.display = 'none';
-    }
-
-    function sample2_execDaumPostcode() {
+    function execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
-                var addr = ''; 
-                var extraAddr = ''; 
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-                if (data.userSelectedType === 'R') {
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+				
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
                     addr = data.roadAddress;
-                } else { 
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
                     addr = data.jibunAddress;
                 }
 
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
                 if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
                     if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
                         extraAddr += data.bname;
                     }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
                     if(data.buildingName !== '' && data.apartment === 'Y'){
                         extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
                     }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
                     if(extraAddr !== ''){
                         extraAddr = ' (' + extraAddr + ')';
                     }
-                    document.getElementById("sample2_extraAddress").value = extraAddr;
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById("extraAddress").value = extraAddr;
                 
                 } else {
-                    document.getElementById("sample2_extraAddress").value = '';
+                    document.getElementById("extraAddress").value = '';
                 }
 
-                document.getElementById('sample2_postcode').value = data.zonecode;
-                document.getElementById("sample2_address").value = addr;
-                document.getElementById("sample2_detailAddress").focus();
-
-                element_layer.style.display = 'none';
-            },
-            width : '100%',
-            height : '100%',
-            maxSuggestItems : 5
-        }).embed(element_layer);
-
-        element_layer.style.display = 'block';
-
-        initLayerPosition();
-    }
-
-    function initLayerPosition(){
-        var width = 300; 
-        var height = 400; 
-        var borderWidth = 5; 
-
-        
-        element_layer.style.width = width + 'px';
-        element_layer.style.height = height + 'px';
-        element_layer.style.border = borderWidth + 'px solid';
-        element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
-        element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('postcode').value = data.zonecode;
+                document.getElementById("address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("detailAddress").focus();
+            }
+        }).open();
     }
 </script>
-  
   <div class="inputArea">
    <button type="submit" class="order_btn">주문</button>
    <button type="button" class="cancel_btn">취소</button> 

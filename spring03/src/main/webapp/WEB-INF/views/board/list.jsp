@@ -74,17 +74,22 @@ function list(page){
 </c:if>
 ${map.count}개의 게시물이 있습니다.
 <br>
+<br>
 <div style="text-align: center; ">
-<table border="1"" style="text-align: center; margin: 0 auto; ">
-  <tr>
+<table class="table"  style=" margin: 0 auto; width: 50%; border-bottom: 1; ">
+ <thead class="thead-dark">
+  <tr style="text-align: center;">
     <th>번호 </th>
     <th>제목 </th>
     <th>이름 </th>
     <th>내용 </th>
     <th>날짜 </th>
+    <th>추천수</th>
     <th>조회수 </th>
   </tr>
+  </thead>
   <!-- forEach var="개별데이터" items="집합데이터" -->
+  <tbody>
 <c:forEach var="row" items="${map.list}"> 
   <tr>
     <td>${row.bno} </td>
@@ -97,13 +102,15 @@ ${map.count}개의 게시물이 있습니다.
     <td>${row.name} </td>
     <td>${row.content} </td>
     <td><fmt:formatDate value="${row.reg_date}" 
-    pattern="yyyy-MM-dd HH:mm:ss"/></td>
+    pattern="yy-MM-dd HH:mm"/></td>
+    <td>${row.recommend}</td>
     <td>${row.readcount} </td>
   </tr>
-</c:forEach> 
+</c:forEach>
+
 <!-- 페이지 네비게이션 출력 -->
 <tr>
-<td colspan="6" align="center">
+<td colspan="7" align="center">
 <c:if test="${map.pager.curBlock > 1}">
 	<a href="#" onclick="list('1')">[처음]</a>
 </c:if>
@@ -130,7 +137,8 @@ ${map.count}개의 게시물이 있습니다.
 		<a href="#"	onclick="list('${map.pager.totPage}')">[끝]</a>
 	</c:if>
 </td>
-</tr>
+</tr> 
+</tbody>
 </table>
 </div>
 </div>

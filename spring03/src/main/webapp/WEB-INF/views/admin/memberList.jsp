@@ -7,9 +7,6 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>D P M Admin</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="" />
-		<meta name="keywords" content="" />
-		<meta name="author" content="FREEHTML5.CO" />
 		<%@ include file="../include/header.jsp" %>
 		
 		<style type="text/css">
@@ -29,28 +26,19 @@
 				width: 80px;
 			}
 			.postcode, .rank {
-				width: 45px;
+				width: 50px;
 			}
 			#memberListTable{
 				max-height: 100px;
 				overflow-y: auto;
 			}
 		</style>
-		<!-- Bootstrap  -->
-		<link rel="stylesheet" href="${path}/resources/css/bootstrap.css">
-		<link rel="stylesheet" href="${path}/resources/admin/css/style.css">
 	</head>
 	<body>
-		<header id="fh5co-header" role="banner">
-			<div class="container text-center">
-				<div id="header">
-					<h6><a href="${path}/main/home.do">D P M</a></h6>	
-				</div>
-			</div>
-		</header>
+	
+		<%@ include file="../include/admin_menu.jsp" %>
 		<!-- END #fh5co-header -->
 		
-		<%@ include file="../include/admin_menu.jsp" %>
 		<table class="table" id="memberListTable">
 			<tr>
 				<td>아이디</td>
@@ -92,8 +80,8 @@
 					</td>
 					<td class="rank">
 						<c:choose>
-							<c:when test="${dto.member_rank >= 5}">
-								11
+							<c:when test="${dto.member_rank >= 8}">
+								어드민
 							</c:when>
 							<c:when test="${dto.member_rank == 4}">
 								VVIP
@@ -173,7 +161,6 @@
 						submitUserEdit.style.cssText = "display: inline-block; border: 1px solid #000; color: blue;";
 						userEdit.value = "취소";
 					}
-					console.log(inputValues);
 				} else {
 					for(var i = 0; i < memberListInput.length; i++) {
 						memberListInput[i].value = inputValues[i];
@@ -185,7 +172,6 @@
 						inputValues[i] = null;
 						userEdit.value = "수정";
 					}
-					console.log(inputValues);
 				}
 				
 				/* var memberListUserid = document.getElementById("memberListUserid" + num);
@@ -263,7 +249,6 @@
 						"member_verify" : document.getElementById("member_verify" + num).value,
 						"sesseionMember_rank": document.getElementById("sesseionMember_rank" + num).value
 					}
-					console.log(param);
 					$.ajax({
 						type: 'post',
 						url: '${path}/admin/updateMember.do',

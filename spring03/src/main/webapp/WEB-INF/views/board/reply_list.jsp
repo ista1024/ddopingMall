@@ -29,7 +29,7 @@ $(function(){
 </head>
 <body>
 <% pageContext.setAttribute("newLineChar", "\n"); %>
-<table style="width:700px">
+<table style="width:700px; text-align: center; margin:0 auto;">
 <!-- fn: header.jsp의 jstl -->
 <c:forEach var="row" items="${list}" varStatus="replyCount">   
 	<c:set var="str"

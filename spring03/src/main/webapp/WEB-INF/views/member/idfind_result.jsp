@@ -8,7 +8,6 @@
 <%@ include file="../include/header.jsp" %>
 </head>
 <body>
-<%@ include file="../include/menu.jsp" %>
 <script type="text/javascript">alert("<%="아이디는 "+request.getAttribute("result")+"입니다." %>")
 								location.href="${path}/member/login.do";
 </script>

@@ -5,7 +5,61 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
 <title>Insert title here</title>
+<style type="text/css">
+a:visited {
+   text-decoration: underline;
+   color: black;}
+a:link {text-decoration: none; color: ; }
+a:hover {
+   text-decoration:none;  color: underlblack;
+   }
+
+* {
+    box-sizing: border-box;
+}
+body{
+	justify-content: center; 
+	display: flex; 
+	 
+	text-align: ;
+	
+	/* line-height: 50px; */
+	background: white;
+	
+	}
+
+	#header span {
+	font-family: 'Monoton', cursive;
+	color: white;
+}
+#form2{
+	background-color: #F2F2F2;
+	position: relative;
+	z-index: 2;
+	padding: 100px;
+}
+#btnupdate {
+width: 60%; height: 40px;
+background: black;
+opacity: 0.5;
+color: gray;
+font-size: 20px;
+border: none;
+border-radius: 25px; 
+cursor: pointer;
+outline: none;
+color: white;
+margin-top: 25px; 
+}
+
+
+
+
+</style>
 <%@ include file="../include/header.jsp" %>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
@@ -63,6 +117,7 @@ $(function(){
 	$("#btnupdate").click(function(){
 		var postcode = document.getElementById("postcode").value;
 		console.log(postcode);
+		var userid=$("#userid").val();
 		var passwd=$("#passwd").val();
 		var postcode=$("#postcode").val();
 		var address=$("#address").val();
@@ -133,7 +188,7 @@ $(function(){
 	        text = [];
 		      }
 		//폼 데이터를 서버로 제출
-		
+		alert("수정되었습니다.");
 		document.form2.action="${path}/member/memberUpdate.do";
 		document.form2.submit();
 	});
@@ -149,53 +204,69 @@ $(function(){
 </head>
 
 <body>
-<%@ include file="../include/menu.jsp" %>
-		<section id="">
-			<form name="form2" id="form2" method="post" >
+
+<div id="wrapper">
+<header id="fh5co-header" role="banner" style="text-align: center;">
+			<div class="container text-center">
+				<div id="header">
+					<span><a href="${path}/main/home.do" style="font-size: 130px;">D P M</a></span>	
+				</div>
+			</div>
+		</header>
+		<section id="" style="line-height: 50px;">
+			<form name="form2" id="form2" method="post" style="padding:30px; ">
+			<h2 style="text-align: center; margin-top: 5px; margin-bottom: 35px;">내정보
+			
+			</h2>
+			
+				<div class="" >
+					<label style="font-size: 20px;" class="control-label" for="userid">아이디 : ${sessionScope.userid}</label>
+					<input name="userid" value="${sessionScope.userid}" hidden="">
+					</div>
 				<div class="">
-					<label class="control-label" for="userid">아이디</label>
-					<input class="form-control" type="text" id="userId" name="userid" readonly="readonly" value="${sessionScope.userid}" />
+					<label style="font-size: 20px;" class="control-label" for="Passwd">비밀번호 : </label>
+					<input style="font-size: 20px; border: none; background-color: transparent; width: 130px; " 
+					class="form-control" type="password" id="passwd" name="passwd" value="${sessionScope.passwd}" />
 				</div>
 				<div class="">
-					<label class="control-label" for="Passwd">패스워드</label>
-					<input class="form-control" type="password" id="passwd" name="passwd" value="${sessionScope.passwd}" />
+					<label style="font-size: 20px;" class="control-label" for="name">성명 : ${sessionScope.name}</label>
+					
 				</div>
 				<div class="">
-					<label class="control-label" for="name">성명</label>
-					<input class="form-control" type="text" id="name" name="name" value="${sessionScope.name}" readonly="readonly"/>
+					<label style="font-size: 20px;" class="control-label" for="hp">연락처 : ${sessionScope.hp}-${sessionScope.hp2}-${sessionScope.hp3}</label>
 				</div>
-				<div class="">
-					<label class="control-label" for="hp">전화번호</label>
-					<input class="form-control" type="text" id="hp" name="hp" readonly="readonly" value="${sessionScope.hp}"/>-
-					<input class="form-control" type="text" id="hp2" name="hp2" readonly="readonly" value="${sessionScope.hp2}"/>-
-					<input class="form-control" type="text" id="hp3" name="hp3" readonly="readonly" value="${sessionScope.hp3}"/>
+				
+				<div>
+					<label style="font-size: 20px;" class="control-label" for="email">이메일 : ${sessionScope.email}@${sessionScope.textemail}</label>
+					
 				</div>
-				<div class="">
-					<label class="control-label" for="email">이메일</label>
-					<input class="form-control" type="text" id="email" name="email" readonly="readonly" value="${sessionScope.email}"/>@
-					<input class="form-control" type="text" id="textemail" name="textemail" readonly="readonly" value="${sessionScope.textemail}"/>
+				<div class="" style="line-height: 32px">
+					<label style="font-size: 20px; height: 30px;" class="control-label" for="addr">주소 : </label>
+					<input style="font-size: 15px; border: 0.5px solid #606060; background-color: transparent; width: 150px; height: 30px;" 
+					class="form-control" type="text" id="postcode" name="postcode" value="${sessionScope.postcode}"/>
+					<input style="" type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
+					<input style="font-size: 15px; border: 0.5px solid #606060; background-color: transparent; width: 354px; height: 30px;" 
+					class="form-control" type="text" id="address" name="address" value="${sessionScope.address}"/><br>
+					<input style="font-size: 15px; border: 0.5px solid #606060; background-color: transparent; width: 150px; height: 30px;" 
+					class="form-control" type="text" id="detailAddress" name="detailAddress" value="${sessionScope.detailAddress}"/>
+					<input style="font-size: 15px; border: 0.5px solid #606060; background-color: transparent; width: 198px; height: 30px;" 
+					class="form-control" type="text" id="extraAddress" name="extraAddress" value="${sessionScope.extraAddress}"/>
 				</div>
-				<div class="">
-					<label class="control-label" for="addr">주소</label>
-					<input class="form-control" type="text" id="postcode" name="postcode" value="${sessionScope.postcode}"/>
-					<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
-					<input class="form-control" type="text" id="address" name="address" value="${sessionScope.address}"/><br>
-					<input class="form-control" type="text" id="detailAddress" name="detailAddress" value="${sessionScope.detailAddress}"/>
-					<input class="form-control" type="text" id="extraAddress" name="extraAddress" value="${sessionScope.extraAddress}"/>
+				<div class="aa">
+					<label style="font-size: 15px;" class="control-label" for="hp">회원가입일자 : <fmt:formatDate value='${sessionScope.join_date}' pattern='yy.MM.dd' />
+					</label>
 				</div>
-				<div class="">
-					<label class="control-label" for="hp">회원가입일자</label>
-					<input class="form-control" type="text" id="join_date" name="join_date" readonly="readonly" value="<fmt:formatDate value='${sessionScope.join_date}' pattern='yy.MM.dd' />"/>
-				</div>
-				<div class="btnupdate">
+				<div class="btnupdate" style="text-align: center;">
 					 <button id="btnupdate">회원정보수정</button>
+					 <h5 style="margin-bottom:5px; margin-top: 3px; font-size: 11px; color: red;"> 비밀번호, 주소만 수정 가능합니다. 관리자에 문의바랍니다.</h5>
 				</div>
 			</form>
 		</section>
-		<form action="${path}/main/home.do">
+		<%-- <form action="${path}/main/home.do">
 		<div>
-		<button  type="submit">취소</button>
+		<button  type="submit">ㅁㄴㅇㅁㄴㅇ</button>
 		</div>
-		</form>
+		</form> --%>
+		</div>
 	</body>
 </html>

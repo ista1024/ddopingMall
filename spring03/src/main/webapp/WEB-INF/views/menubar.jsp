@@ -53,22 +53,53 @@
 </head>
 <body>
 
-<header id="fh5co-header" role="banner">
-	<div class="container text-center">
-		<div id="header">
-			<h6><a style="text-decoration: none;" href="${path}/main/home.do">D P M</a></h6>	
+	<header id="fh5co-header" role="banner">
+		<div class="container text-center">
+			<div id="header">
+				<h6><a style="text-decoration: none;" href="${path}/main/home.do">D P M</a></h6>	
+			</div>
+			<nav>
+				<ul>
+					<li><a href="${path}/main/menubar.do?product_type=best">Best</a></li>
+					<li><a href="${path}/main/menubar.do?product_type=top">Top</a></li>
+					<li><a href="${path}/main/menubar.do?product_type=pants">Pants</a></li>
+					<li><a href="${path}/board/list.do">Review</a></li>
+				</ul>
+			</nav>
 		</div>
-		<nav>
-			<ul>
-				<li><a href="${path}/main/menubar.do?product=best">Best</a></li>
-				<li><a href="${path}/main/menubar.do?product=top">Top</a></li>
-				<li><a href="${path}/main/menubar.do?product=pants">Pants</a></li>
-				<li><a href="${path}/board/list.do">Review</a></li>
-			</ul>
-		</nav>
+	</header>
+	<!-- END #fh5co-header -->
+
+	<!-- 좌측 a태그 -->
+	<div class="header_left">
+		<div>
+			<a href="${path}/main/home.do">DDO PING MALL</a>
+		</div>
 	</div>
-</header>
-<!-- END #fh5co-header -->
+	
+	<!-- 우측 메뉴1 -->
+	<div class="header_right1">
+		<a href=""><i class="icon-chevron-up" style="font-size: 30px;"></i></a><br><br>
+		<a href="#"><i class="icon-chevron-down" style="font-size: 30px;"></i></a><br><br>
+		<a href="${path}/shop/cart/list.do"><i class="icon-shopping-cart fa-5x" style="font-size: 30px"></i></a>
+		<!-- 우측 메뉴2 -->
+		<div class="header_right2" style="letter-spacing: 8px;">
+			<c:choose>
+				<c:when test="${sessionScope.userid == null }">
+					<!-- 로그인하지 않은 상태  -->
+			  		<a href="${path}/member/login.do">LOGIN</a>
+				</c:when>
+				<c:otherwise>
+					<!-- 로그인한 상태 -->
+					<a href="${path}/member/memberUpdateView.do">MYPAGE</a> |
+					<a href="${path}/member/logout.do">LOGOUT</a> 
+					<c:if test="${sessionScope.member_verify >= 2}">
+						| <a href="${path}/admin/adminHome.do">ADMIN</a>
+					</c:if>
+				</c:otherwise>
+			</c:choose>
+		</div>
+	</div>
 		
 <div class="container-fluid pt70 pb70">
 	<div id="fh5co-projects-feed" class="fh5co-projects-feed clearfix masonry">

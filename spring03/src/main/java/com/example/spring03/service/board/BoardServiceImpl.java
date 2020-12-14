@@ -109,5 +109,10 @@ public class BoardServiceImpl implements BoardService {
 	public BoardDTO read(int bno) throws Exception {
 		return boardDao.read(bno);
 	}
+	
+	@Override
+	public void recommend(int bno) throws Exception{
+		boardDao.recommend(bno);
+	}
 
 }

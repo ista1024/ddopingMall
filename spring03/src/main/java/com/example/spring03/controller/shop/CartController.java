@@ -12,10 +12,8 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,6 +21,7 @@ import com.example.spring03.model.member.dto.MemberDTO;
 import com.example.spring03.model.order.dto.OrderDTO;
 import com.example.spring03.model.order.dto.OrderDetailDTO;
 import com.example.spring03.model.shop.dto.CartDTO;
+import com.example.spring03.service.member.MemberService;
 import com.example.spring03.service.order.OrderService;
 import com.example.spring03.service.shop.CartService;
 
@@ -34,6 +33,8 @@ public class CartController {
 	CartService cartService;
 	@Inject
 	OrderService orderService;
+	@Inject
+	MemberService memberService;
 	
 	@RequestMapping("list.do")
 	public ModelAndView list(HttpSession session, ModelAndView mav) {
@@ -45,7 +46,7 @@ public class CartController {
 			//장바구니 합계 계산
 			int sumMoney = cartService.sumMoney(userid);
 			//배송료 계산
-			int fee = sumMoney >= 50000 ? 0 : 2500;//합계5만원이상이면
+			int fee = sumMoney >= 30000 ? 0 : 2500;//합계3만원이상이면
 			//배송료 0원
 			map.put("sumMoney", sumMoney);//장바구니 금액 합계
 			map.put("fee", fee); //배송료
@@ -121,12 +122,11 @@ public class CartController {
 	}
 	// 주문
 	@RequestMapping("order.do")
-	public String order(HttpSession session, 
-			OrderDTO order, OrderDetailDTO orderDetail, MemberDTO member) throws Exception {
-	 logger.info("order");
-	 logger.info("MemberDTO : " + member);
-	 String userId = member.getUserid();
-	 logger.info("userId : " + userId);
+	public String order(OrderDTO order, OrderDetailDTO orderDetail, MemberDTO member, HttpSession session) throws Exception {
+		logger.info("order");
+	 logger.info("orderDTO : " + order);
+	 String userId = (String)session.getAttribute("userid");
+	 int amount = order.getAmount();
 	 Calendar cal = Calendar.getInstance();
 	 int year = cal.get(Calendar.YEAR);
 	 String ym = year + new DecimalFormat("00").format(cal.get(Calendar.MONTH) + 1);
@@ -138,17 +138,18 @@ public class CartController {
 	 }
 	 
 	 String orderId = ymd + "_" + subNum;
-	 logger.info("orderId : " + orderId);
+	 order = memberService.orderMember(userId);
+	 logger.info("userid : " + userId);
 	 order.setOrderId(orderId);
-	 order.setUserId(userId);
+	 order.setOrderPhon(order.getHp()+order.getHp2()+order.getHp3());
+	 order.setAmount(amount);
 	 logger.info("orderDTO : " + order);
+	 
 	 orderService.orderInfo(order);
 	 orderService.cartAllDelete(userId);
-	 
 	 orderDetail.setOrderId(orderId);   
 	 orderService.orderInfo_Details(orderDetail);
-	 
-	 return "redirect:/shop/cart/orderList";  
+	 return "redirect:/shop/cart/list.do";  
 	}
 	
 	// 주문 목록
@@ -164,5 +165,14 @@ public class CartController {
 	 
 	 return model;
 	}
+	
+	@RequestMapping("buy.do")
+	public ModelAndView getOrderList2(HttpSession session, ModelAndView model, OrderDTO order) throws Exception {
+	 logger.info("get order list OrderDTO : " + order);
+	 model.addObject("dto", order);
+	 model.setViewName("shop/buy");
+	 return model;
+	}
+
 
 }

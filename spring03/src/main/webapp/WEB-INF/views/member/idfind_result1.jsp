@@ -8,7 +8,6 @@
 <%@ include file="../include/header.jsp" %>
 </head>
 <body>
-<%@ include file="../include/menu.jsp" %>
 <script type="text/javascript">alert("<%=request.getAttribute("result") %>");
 	location.href="${path}/member/idFind.do";
 </script>
